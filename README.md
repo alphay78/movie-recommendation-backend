@@ -1,4 +1,4 @@
-# Movie Recommendation Backend
+
 # 🎬 Movie Recommendation Backend
 
 ![Django](https://img.shields.io/badge/Django-5.2.8-green?style=flat-square&logo=django)
