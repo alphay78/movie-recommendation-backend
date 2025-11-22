@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variables
+.env
+*.env
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+static/
+logs/
+*.log
+
+# Migrations (keep __init__.py)
+*/migrations/__pycache__/
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Byte-compiled
+*.pickle
+
+# Redis dump
+dump.rdb
+
+# System
+.DS_Store
+Thumbs.db
