@@ -8,24 +8,28 @@ from datetime import timedelta
 from dotenv import load_dotenv
 import dj_database_url
 
-# Load environment variables
+# Load .env variables (local only — ignored on Render)
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep secret key in .env for production
+# SECRET KEY
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 
-# DEBUG mode
+# DEBUG
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 # Allowed hosts
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1,movie-recommendation-backend-6.onrender.com"
+).split(",")
 
-
-# Application definition
+# -------------------------------
+# APPLICATIONS
+# -------------------------------
 INSTALLED_APPS = [
-    # Django apps
+    # Default Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third-party apps
+    # Third-party
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
@@ -44,10 +48,15 @@ INSTALLED_APPS = [
 ]
 
 
-# MIDDLEWARE (correct whitenoise position)
+# -------------------------------
+# MIDDLEWARE
+# -------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",   
+
+    # REQUIRED for Render static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -60,6 +69,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 
+# -------------------------------
+# TEMPLATES
+# -------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -80,19 +92,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # -------------------------------
-# DATABASE CONFIG (Render + Local)
+# DATABASE (Render + Local)
 # -------------------------------
 DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=not DEBUG  # Avoid SSL issues locally
     )
 }
 
 
 # -------------------------------
-# PASSWORD VALIDATION
+# PASSWORD RULES
 # -------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
@@ -116,7 +128,7 @@ REST_FRAMEWORK = {
 
 
 # -------------------------------
-# SIMPLE JWT SETTINGS
+# JWT TOKEN SETTINGS
 # -------------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
@@ -126,19 +138,16 @@ SIMPLE_JWT = {
 
 
 # -------------------------------
-# REDIS CACHE (Disable in Render)
+# CACHE (Disable Redis on Render free tier)
 # -------------------------------
 if DEBUG:
-    # Local Redis
     CACHES = {
         "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379/1",
-            "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
         }
     }
 else:
-    # Render (No Redis)
+    # Render free tier: NO REDIS
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
@@ -147,7 +156,7 @@ else:
 
 
 # -------------------------------
-# TMDB API SETTINGS
+# TMDB SETTINGS
 # -------------------------------
 TMDB_API_KEY = os.getenv("TMDB_API_KEY", None)
 TMDB_CACHE_TTL = int(os.getenv("TMDB_CACHE_TTL", 3600))
@@ -163,21 +172,21 @@ USE_TZ = True
 
 
 # -------------------------------
-# STATIC FILES (Render Compatible)
+# STATIC FILES (REQUIRED for Render)
 # -------------------------------
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"  # REQUIRED for Render
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # -------------------------------
-# DEFAULT PRIMARY KEY TYPE
+# DEFAULT PRIMARY KEY
 # -------------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # -------------------------------
-# SWAGGER SETTINGS
+# SWAGGER
 # -------------------------------
 SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,
@@ -189,3 +198,4 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+ 
