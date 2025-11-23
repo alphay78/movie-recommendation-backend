@@ -19,15 +19,18 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 # DEBUG
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
-# Allowed hosts
+
+# -------------------------------
+# ALLOWED HOSTS / CSRF (FIXED)
+# -------------------------------
 ALLOWED_HOSTS = [
-    'movie-recommendation-backend-6.onrender.com ',
-    ' localhost',
-    '127.0.0.1'
+    "movie-recommendation-backend-6.onrender.com",
+    "localhost",
+    "127.0.0.1",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://movie-recommendation-backend-6.onrender.com'
+    "https://movie-recommendation-backend-6.onrender.com",
 ]
 
 
@@ -104,7 +107,7 @@ DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=not DEBUG  # Avoid SSL issues locally
+        ssl_require=not DEBUG  # Avoid SSL issues locally, require SSL on Render
     )
 }
 
@@ -144,21 +147,13 @@ SIMPLE_JWT = {
 
 
 # -------------------------------
-# CACHE (Disable Redis on Render free tier)
+# CACHE (Locmem for Render free tier)
 # -------------------------------
-if DEBUG:
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
     }
-else:
-    # Render free tier: NO REDIS
-    CACHES = {
-        "default": {
-            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        }
-    }
+}
 
 
 # -------------------------------
@@ -204,4 +199,3 @@ SWAGGER_SETTINGS = {
         }
     },
 }
- 
