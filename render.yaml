@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: movie-recommendation-backend
+    name: movie-recommendation-backend-9
     env: python
     region: oregon
     plan: free
@@ -24,7 +24,7 @@ services:
         value: "False"
 
       - key: ALLOWED_HOSTS
-        value: "movie-recommendation-backend.onrender.com"
+        value: "movie-recommendation-backend-9sjr.onrender.com"
 
       - key: TMDB_API_KEY
         sync: false
