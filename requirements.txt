@@ -7,8 +7,9 @@ django-ratelimit==4.1.0
 django-redis==6.0.0
 gunicorn==23.0.0
 whitenoise==6.11.0
-psycopg2-binary==2.9.11   # use psycopg2-binary to avoid build errors
+psycopg2-binary==2.9.9
 python-dotenv==1.2.1
 redis==7.1.0
 requests==2.31.0
-Pillow==9.5.0              # pinned version to avoid Python 3.12 build issues
+Pillow==11.0.0
+            
