@@ -24,9 +24,9 @@ DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 # ALLOWED HOSTS / CSRF (FIXED)
 # -------------------------------
 ALLOWED_HOSTS = [
-    "movie-recommendation-backend-6.onrender.com",
+    "movie-recommendation-backend-9sjr.onrender.com",
     "localhost",
-    "127.0.0.1",
+    "127.0.0.1"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
