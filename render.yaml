@@ -35,4 +35,3 @@ services:
 databases:
   - name: movie-db
     plan: free
-

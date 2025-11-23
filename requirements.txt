@@ -1,16 +1,14 @@
 Django==5.0.4
 djangorestframework==3.16.1
-djangorestframework_simplejwt==5.5.1
+djangorestframework-simplejwt==5.5.1
 drf-yasg==1.21.11
 django-filter==25.2
 django-ratelimit==4.1.0
 django-redis==6.0.0
 gunicorn==23.0.0
 whitenoise==6.11.0
-
-psycopg2==2.9.11
+psycopg2-binary==2.9.11   # use psycopg2-binary to avoid build errors
 python-dotenv==1.2.1
 redis==7.1.0
 requests==2.31.0
-
-Pillow==10.3.0
+Pillow==9.5.0              # pinned version to avoid Python 3.12 build issues
