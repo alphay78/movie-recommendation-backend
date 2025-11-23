@@ -22,7 +22,7 @@ idna==3.7
 inflection==0.5.1
 kombu==5.5.4
 packaging==25.0
-pillow==10.2.0
+pillow==10.4.0
 prompt_toolkit==3.0.52
 psycopg2==2.9.11
 PyJWT==2.10.1
