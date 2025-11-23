@@ -20,10 +20,12 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 # Allowed hosts
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1,movie-recommendation-backend-6.onrender.com"
-).split(",")
+ALLOWED_HOSTS = [
+    'movie-recommendation-backend-6.onrender.com ',
+    ' localhost',
+    '127.0.0.1'
+]
+
 
 # -------------------------------
 # APPLICATIONS
